@@ -1,0 +1,34 @@
+<?php
+
+function redirect(string $page): void  {
+    $url = "/?page=" . urlencode($page);
+    
+    header("Location: " . $url);
+
+    exit; 
+}
+
+function set_message(string $message, string $type = 'error'): void {
+    $_SESSION['message'] = [
+        'message' => $message,
+        'type' => $type
+    ];
+}
+
+function get_message(): ?array {
+    if (isset($_SESSION['messages'])) {
+        $message_data = $_SESSION['messages'];
+        
+        unset($_SESSION['messages']);
+        
+        return $message_data;
+    }
+    return null;
+}
+
+function get_current_user_id(): ?int {
+    if (isset($_SESSION['user_id'])) {
+        return (int)$_SESSION['user_id'];
+    }
+    return null;
+}

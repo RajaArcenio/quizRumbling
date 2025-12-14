@@ -1,0 +1,158 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: url('leaderboard_background.jpg') no-repeat center center/cover;
+    background-color: var(--color-background-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+.leaderboard-container {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Leaderboard Card */
+.leaderboard-card {
+    border: var(--border-width-extra-thick) solid var(--color-black);
+    padding: 40px;
+    box-shadow: var(--shadow-inset);
+    width: 100%;
+    margin-top: 100px;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.leaderboard-table thead {
+    background-color: var(--color-gold-darker);
+}
+
+.leaderboard-table th {
+    padding: 15px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--color-black);
+    text-transform: uppercase;
+    border: var(--border-width-medium) solid var(--color-black);
+}
+
+.leaderboard-table tbody tr {
+    background-color: var(--color-gold-primary);
+    transition: all 0.2s ease;
+}
+
+.leaderboard-table tbody tr:hover {
+    background-color: var(--color-gold-light);
+    transform: translateX(5px);
+}
+
+.leaderboard-table td {
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-black);
+    border: var(--border-width-thin) solid var(--color-black);
+}
+
+/* Pagination Buttons */
+.pagination-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-btn {
+    background-color: var(--color-gold-primary);
+    border: var(--border-width-medium) solid var(--color-black);
+    border-radius: var(--border-radius-pill);
+    padding: 12px 50px;
+    font-family: var(--font-family-primary);
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--color-black);
+    cursor: pointer;
+    box-shadow: var(--shadow-button);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.nav-btn:hover {
+    background-color: var(--color-gold-light);
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px var(--color-black);
+}
+
+.nav-btn:active {
+    transform: translateY(0px);
+    box-shadow: var(--shadow-button);
+}
+
+.previous-btn {
+    background-color: var(--color-gray);
+}
+
+.previous-btn:hover {
+    background-color: var(--color-white);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .leaderboard-card {
+        padding: 25px 15px;
+        margin-top: 80px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 10px 5px;
+        font-size: 0.85rem;
+    }
+
+    .leaderboard-table th {
+        font-size: 0.95rem;
+    }
+
+    .pagination-buttons {
+        flex-direction: column;
+    }
+
+    .nav-btn {
+        width: 100%;
+        padding: 12px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .leaderboard-card {
+        padding: 20px 10px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 8px 3px;
+        font-size: 0.75rem;
+    }
+
+    .leaderboard-table th {
+        font-size: 0.85rem;
+    }
+}

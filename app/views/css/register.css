@@ -1,0 +1,117 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    background: url('register_background.jpg') no-repeat center center/cover;
+    box-shadow: inset 0 0 0 1000px var(--color-overlay-medium);
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 640px;
+}
+
+/* Logo */
+.logo {
+    max-width: 300px;
+    margin-bottom: -30px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Register Box */
+.register-box {
+    background: var(--color-overlay-dark);
+    border: var(--border-width-thick) solid var(--color-gold-primary);
+    border-radius: var(--border-radius-large);
+    padding: 50px 40px 30px;
+    color: var(--color-white);
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-extra-large);
+}
+
+h2 {
+    color: var(--color-gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    text-shadow: var(--text-shadow-soft);
+}
+
+/* Input Styles */
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    color: var(--color-gold-light);
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-pill);
+    border: var(--border-width-thick) solid var(--color-gold-primary);
+    background-color: var(--color-gray-light);
+    font-family: var(--font-family-primary);
+    font-weight: bold;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus {
+    background-color: var(--color-white);
+    box-shadow: 0 0 10px rgba(238, 187, 92, 0.5);
+}
+
+/* Button */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.register-button {
+    background-color: var(--color-gray);
+    border: var(--border-width-medium) solid var(--color-bronze);
+    border-radius: var(--border-radius-pill);
+    padding: 8px 40px;
+    font-family: var(--font-family-primary);
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--shadow-small);
+}
+
+.register-button:hover {
+    background-color: var(--color-white);
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .register-box {
+        padding: 40px 20px 20px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    input {
+        padding: 8px 15px;
+    }
+}

@@ -1,0 +1,139 @@
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: url('dashboard_background.jpg') no-repeat center center/cover;
+    background-color: var(--color-background-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.separator {
+    margin: 0 15px;
+    font-weight: normal;
+}
+
+/* Main Card */
+.main-card {
+    width: 80%;
+    max-width: 900px;
+    height: 500px;
+    border: var(--border-width-extra-thick) solid var(--color-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    box-shadow: var(--shadow-inset);
+    animation: cardFloat 3s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+    50% {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+    }
+}
+
+/* Quote Section */
+.quote-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--color-white);
+    text-shadow: var(--text-shadow-outline);
+}
+
+.main-quote {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.sub-quote {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Stats Section */
+.stats-row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background-color: var(--color-gold-dark);
+    width: 30%;
+    padding: 20px 15px;
+    border-radius: var(--border-radius-medium);
+    text-align: left;
+    box-shadow: var(--shadow-medium);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-box h3 {
+    font-size: 1rem;
+    color: var(--color-black);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-shadow: var(--text-shadow-subtle);
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-black);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    .main-card {
+        height: auto;
+        min-height: 400px;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .main-quote {
+        font-size: 1.5rem;
+    }
+
+    .sub-quote {
+        font-size: 0.9rem;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        /* Stat menumpuk ke bawah di HP */
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .stat-box {
+        width: 100%;
+        min-height: 80px;
+    }
+}

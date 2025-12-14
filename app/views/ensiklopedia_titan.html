@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ensiklopedia Titan - Attack on Titan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/ensiklopedia.css">
+</head>
+
+<body>
+    <!-- NAVBAR LEFT -->
+    <a href="quiz.html" class="menu-btn">
+        <img style="width: 60px; height: 60px;" src="images/start_quiz_active_logo.png">
+    </a>
+    <a href="dashboard.html" class="menu-btn-2">
+        <img style="width: 45px; height: 45px;" src="images/dashboard_logo.png">
+    </a>
+    <a href="leaderboard.html" class="menu-btn-3">
+        <img style="width: 45px; height: 45px;" src="images/leaderboard_logo.png">
+    </a>
+    <a href="ensiklopedia.html" class="menu-btn-4">
+        <img style="width: 45px; height: 45px;" src="images/enskiklopedia_logo.png">
+    </a>
+    <!-- END NAVBAR LEFT -->
+
+    <div class="ensiklopedia-container">
+        <!-- Header -->
+        <div class="top-bar">
+            <span>ENSIKLOPEDIA</span>
+        </div>
+
+        <!-- Encyclopedia Card -->
+        <div class="ensiklopedia-card card-with-overlay">
+            <!-- Content Display Area -->
+            <div class="content-display" id="content-display">
+                <!-- Character cards will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <button class="nav-btn previous-btn" id="prev-btn">PREVIOUS</button>
+                <button class="nav-btn next-btn" id="next-btn">NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/ensiklopedia_titan.js"></script>
+</body>
+
+</html>

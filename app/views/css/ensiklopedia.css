@@ -1,0 +1,240 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: url('ensiklopedia_background.jpg') no-repeat center center/cover;
+    background-color: var(--color-background-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+.ensiklopedia-container {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensiklopedia Card */
+.ensiklopedia-card {
+    border: var(--border-width-extra-thick) solid var(--color-black);
+    padding: 40px;
+    box-shadow: var(--shadow-inset);
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Category Buttons */
+.category-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.category-btn {
+    background-color: var(--color-gold-primary);
+    border: var(--border-width-medium) solid var(--color-black);
+    border-radius: var(--border-radius-pill);
+    padding: 15px 60px;
+    font-family: var(--font-family-primary);
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--color-black);
+    cursor: pointer;
+    box-shadow: var(--shadow-button);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.category-btn:hover {
+    background-color: var(--color-gold-light);
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px var(--color-black);
+}
+
+.category-btn:active {
+    transform: translateY(0px);
+    box-shadow: var(--shadow-button);
+}
+
+.category-btn.active {
+    background-color: var(--color-gold-darker);
+}
+
+/* Content Display Area */
+.content-display {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    min-height: 450px;
+}
+
+/* Character Card */
+.character-card {
+    background-color: var(--color-gold-darker);
+    border: var(--border-width-thick) solid var(--color-black);
+    border-radius: var(--border-radius-medium);
+    padding: 30px;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow-medium);
+}
+
+.character-image {
+    width: 200px;
+    height: 200px;
+    border: var(--border-width-medium) solid var(--color-black);
+    border-radius: var(--border-radius-small);
+    object-fit: cover;
+    box-shadow: var(--shadow-small);
+}
+
+.character-name {
+    color: var(--color-black);
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: var(--text-shadow-subtle);
+}
+
+.character-description {
+    color: var(--color-black);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: justify;
+    text-shadow: var(--text-shadow-subtle);
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-btn {
+    background-color: var(--color-gold-primary);
+    border: var(--border-width-medium) solid var(--color-black);
+    border-radius: var(--border-radius-pill);
+    padding: 12px 50px;
+    font-family: var(--font-family-primary);
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--color-black);
+    cursor: pointer;
+    box-shadow: var(--shadow-button);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.nav-btn:hover {
+    background-color: var(--color-gold-light);
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px var(--color-black);
+}
+
+.nav-btn:active {
+    transform: translateY(0px);
+    box-shadow: var(--shadow-button);
+}
+
+.previous-btn {
+    background-color: var(--color-gray);
+}
+
+.previous-btn:hover {
+    background-color: var(--color-white);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ensiklopedia-card {
+        padding: 25px 15px;
+        margin-top: 80px;
+    }
+
+    .category-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .category-btn {
+        width: 100%;
+        padding: 12px 40px;
+    }
+
+    .content-display {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .character-card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .character-image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .character-name {
+        font-size: 1.4rem;
+    }
+
+    .character-description {
+        font-size: 0.85rem;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+    }
+
+    .nav-btn {
+        width: 100%;
+        padding: 12px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ensiklopedia-card {
+        padding: 20px 10px;
+    }
+
+    .character-card {
+        padding: 15px;
+    }
+
+    .character-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .character-name {
+        font-size: 1.2rem;
+    }
+
+    .character-description {
+        font-size: 0.75rem;
+    }
+}

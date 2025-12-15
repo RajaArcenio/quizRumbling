@@ -1,7 +1,6 @@
 <?php
 
 function redirect(string $page) {
-    // Asumsi semua redirect  ke index.php
     header("Location: index.php?page=" . $page);
     exit(); 
 }
@@ -23,8 +22,6 @@ function get_message(): ?array {
     }
     return null;
 }
-
-// FILE: app/functions/helper.php
 
 function get_current_user_id(): int {
     return (int)($_SESSION['user_id'] ?? 0);

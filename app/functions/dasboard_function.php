@@ -1,6 +1,5 @@
 <?php
 
-//fungsi untuk mengambil jumlah kuis yang sudah dikerjakan dan total jawaban benar
 function get_user_quick_stats(int $user_id): array {
     global $conn;
 
@@ -26,7 +25,6 @@ function get_user_quick_stats(int $user_id): array {
     ];
 }
 
-//fungsi untuk menghitung ranking user berdasarkan total skor
 function calculate_user_rank(int $user_id): int {
     global $conn;
 
@@ -52,7 +50,6 @@ function calculate_user_rank(int $user_id): int {
     return $rank;
 }
 
-//fungsi untuk mengambil info dashboard user: nama dan rank DITAMPILKAN DI ATAS
 function get_user_dashboard_info(int $user_id): ?array {
     global $conn;
 

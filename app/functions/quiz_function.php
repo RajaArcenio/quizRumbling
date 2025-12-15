@@ -96,8 +96,8 @@ function submit_quiz(int $user_id): bool {
     global $conn;
 
     if (!isset($_SESSION['current_quiz_id']) || !isset($_SESSION['user_answers']) || !isset($_SESSION['quiz_questions'])) {
-        set_message("Sesi kuis tidak valid atau telah berakhir. Harap ulangi kuis.", 'error');
-        redirect('dashboard');
+        set_message("Sesi kuis tidak valid atau telah berakhir. Harap ulangi kuis.", 'error'); 
+        redirect('dashboard'); 
         return false;
     }
 
@@ -107,70 +107,92 @@ function submit_quiz(int $user_id): bool {
 
     $total_correct = 0;
     $final_score = 0;
+    $total_questions = count($quiz_questions);
 
     $conn->begin_transaction(); 
 
     try {
-        $total_questions = count($quiz_questions);
-        $total_wrong = $total_questions;
-
-        $stmt_result = $conn->prepare("INSERT INTO result (id_user, id_quiz, total_benar, total_salah, score) VALUES (?, ?, ?, ?, ?)");
-
-        $temp_benar = 0; $temp_salah = 0; $temp_score = 0;
-        $stmt_result->bind_param("iiiii", $user_id, $quiz_id, $temp_benar, $temp_salah, $temp_score);
-        $stmt_result->execute();
+        // 1. INSERT result (awal)
+        $stmt_result = $conn->prepare("INSERT INTO result (id_user, id_quiz, total_benar, total_salah, score) VALUES (?, ?, 0, 0, 0)");
+        $stmt_result->bind_param("ii", $user_id, $quiz_id);
+        
+        if (!$stmt_result->execute()) {
+            throw new Exception("Gagal INSERT result: " . $stmt_result->error); 
+        }
         $result_id = $conn->insert_id;
         $stmt_result->close();
 
-        $stmt_detail = $conn->prepare("INSERT INTO result_detail (id_result, id_soal, id_opsi, isCorrect) VALUES (?, ?, ?, ?)");
-
+        // 2. INSERT result_detail dan hitung skor
+        $stmt_detail = $conn->prepare("INSERT INTO result_detail (id_result, id_opsi, isCorrect) VALUES (?, ?, ?)");
+        
         foreach ($quiz_questions as $index => $question) {
             $q_id = $question['id_soal'];
-            $chosen_opt_id = $user_answers[$index];
+            $chosen_opt_id = $user_answers[$index] ?? 0; // Set ke 0 jika null
+            $is_correct = 0;
 
-            if ($chosen_opt_id) {
+            if ($chosen_opt_id !== 0) {
                 $is_correct = check_answer_correctness($chosen_opt_id) ? 1 : 0;
-            } else {
-                $is_correct = 0;
-                $chosen_opt_id = 0;
-            }
 
-            if ($is_correct === 1) {
-                $total_correct++;
-                $final_score += 20;
+                if ($is_correct === 1) {
+                    $total_correct++;
+                    $final_score += 20; // Asumsi 20 poin per soal
+                }
+            } 
+            
+            // NOTE: Variabel $chosen_opt_id dan $is_correct harus didefinisikan sebelum loop (sudah ada di kode Anda)
+            $stmt_detail->bind_param("iii", $result_id, $chosen_opt_id, $is_correct);
+            if (!$stmt_detail->execute()) {
+                throw new Exception("Gagal INSERT detail: " . $stmt_detail->error);
             }
-
-            $stmt_detail->bind_param("iiii", $result_id, $q_id, $chosen_opt_id, $is_correct);
-            $stmt_detail->execute();
         }
         $stmt_detail->close();
-
+        
         $total_wrong = $total_questions - $total_correct;
 
+        // 3. UPDATE TABEL RESULT DENGAN SKOR AKHIR
         $stmt_update_result = $conn->prepare("UPDATE result SET total_benar = ?, total_salah = ?, score = ? WHERE id_result = ?");
         $stmt_update_result->bind_param("iiii", $total_correct, $total_wrong, $final_score, $result_id);
-        $stmt_update_result->execute();
+        
+        if (!$stmt_update_result->execute()) {
+            throw new Exception("Gagal mengupdate hasil kuis: " . $stmt_update_result->error);
+        }
         $stmt_update_result->close();
 
+        // 4. UPDATE TOTAL SKOR PENGGUNA DI TABEL USERS
         $stmt_update_user = $conn->prepare("UPDATE users SET total_score = total_score + ? WHERE id = ?");
         $stmt_update_user->bind_param("ii", $final_score, $user_id);
-        $stmt_update_user->execute();
+        
+        if (!$stmt_update_user->execute()) {
+            throw new Exception("Gagal mengupdate total skor pengguna: " . $stmt_update_user->error);
+        }
         $stmt_update_user->close();
         
+        // Kritis: Commit Transaksi
         $conn->commit();
 
+        // Bersihkan sesi
         unset($_SESSION['current_quiz_id']);
         unset($_SESSION['quiz_questions']);
         unset($_SESSION['user_answers']);
 
-        redirect('result_page');
+        // Redirect ke dashboard
+        redirect('dashboard'); 
         return true;
 
     } catch (Exception $e) {
+        // Kritis: Rollback jika terjadi kesalahan
         $conn->rollback();
-        error_log("Quiz Submission Failed: " . $e->getMessage());
+        
+        // --- DEBUGGING ERROR (HAPUS SETELAH BERHASIL) ---
+        echo "<h1>DATABASE ERROR (Quiz Submission Failed)</h1>";
+        echo "<p>Detail Error: " . $e->getMessage() . "</p>";
+        echo "<p>User ID: " . $user_id . "</p>";
+        // exit(); // Komentari baris ini jika Anda ingin kembali menggunakan set_message
+        // ------------------------------------------------
+
+        error_log("Quiz Submission Failed for User ID $user_id: " . $e->getMessage()); 
         set_message("Terjadi kesalahan saat menyimpan hasil kuis. Harap coba lagi.", 'error');
-        redirect('dashboard');
+        redirect('dashboard'); 
         return false;
     }
 }

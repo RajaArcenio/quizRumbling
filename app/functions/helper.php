@@ -24,9 +24,8 @@ function get_message(): ?array {
     return null;
 }
 
-function get_current_user_id(): ?int {
-    if (isset($_SESSION['user_id'])) {
-        return (int)$_SESSION['user_id'];
-    }
-    return null;
+// FILE: app/functions/helper.php
+
+function get_current_user_id(): int {
+    return (int)($_SESSION['user_id'] ?? 0);
 }

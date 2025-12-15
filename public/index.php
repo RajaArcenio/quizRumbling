@@ -3,12 +3,16 @@ session_start();
 
 require_once __DIR__ . '/../app/config/database.php'; 
 
+if ($conn->connect_error) {
+    die("Koneksi database gagal: " . $conn->connect_error);
+}
+
 require_once __DIR__ . '/../app/functions/helper.php'; 
 require_once __DIR__ . '/../app/functions/auth.php'; 
 require_once __DIR__ . '/../app/functions/dasboard_function.php';
 require_once __DIR__ . '/../app/functions/quiz_function.php';
-require_once __DIR__ . '/../app/functions/admin_function.php';
-require_once __DIR__ . '/../app/functions/leaderboard_function.php';
+require_once __DIR__ . '/../app/functions/admin_functions.php';
+require_once __DIR__ . '/../app/functions/leaderboard_functions.php';
 
 $page = $_GET['page'] ?? 'dashboard';
 $action = $_POST['action'] ?? $_GET['action'] ?? null;
@@ -66,7 +70,23 @@ if ($action) {
             }
             break;
         case 'submit_quiz':
-            submit_quiz(get_current_user_id());
+            $user_id = get_current_user_id();
+            if ($user_id > 0) {
+                submit_quiz($user_id);
+            } else {
+                redirect('login'); 
+            }
+            break;
+        case 'save_temp_answer':
+            $question_index = (int)($_POST['question_index'] ?? -1);
+            $option_id = $_POST['option_id'] ? (int)$_POST['option_id'] : null; 
+            
+            if ($question_index !== -1) {
+                save_temp_answer($question_index, $option_id); 
+            }
+            
+            $page = 'quiz';
+            
             break;
         case 'leaderboard':
             $view_path = 'leaderboard.php';
@@ -81,6 +101,28 @@ if (!is_logged_in() && $page !== 'login' && $page !== 'register') {
 
 if (is_logged_in() && ($page === 'login' || $page === 'register')) {
     $page = 'dashboard';
+}
+
+if ($page === 'quiz' && is_logged_in()) {
+    $user_id = get_current_user_id();
+    
+    if (!isset($_SESSION['quiz_questions']) || empty($_SESSION['quiz_questions'])) {
+        $available_quiz = get_available_quiz();
+        
+        if ($available_quiz) {
+            $quiz_id = $available_quiz['id_quiz'];
+            
+            if (has_user_taken_quiz($user_id, $quiz_id)) {
+                set_message("Anda sudah menyelesaikan kuis yang tersedia.", 'warning');
+                $page = 'dashboard';
+            } else {
+                prepare_quiz_questions($quiz_id);
+            }
+        } else {
+            set_message("Saat ini tidak ada kuis yang tersedia.", 'warning');
+            $page = 'dashboard';
+        }
+    }
 }
 
 $view_path = __DIR__ . "/../app/views/{$page}.php";

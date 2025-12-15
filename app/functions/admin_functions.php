@@ -30,7 +30,7 @@ function create_quiz_question(int $quiz_id, string $question_text): int|bool {
         return false;
     }
 
-    $stmt->bind_param("is", $quiz_id, $question_text); // i = integer, s = string
+    $stmt->bind_param("is", $quiz_id, $question_text);
     
     if ($stmt->execute()) {
         $new_question_id = $conn->insert_id;
@@ -46,7 +46,6 @@ function create_quiz_question(int $quiz_id, string $question_text): int|bool {
 function create_question_options(int $question_id, array $options): bool {
     global $conn;
 
-    // Persiapan query INSERT
     $sql = "INSERT INTO `option` (id_question, option_text, is_correct) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     
@@ -57,19 +56,16 @@ function create_question_options(int $question_id, array $options): bool {
 
     $success = true;
     
-    // Looping untuk setiap opsi jawaban
     foreach ($options as $option) {
         $option_text = $option['option_text'];
-        $is_correct = (int)$option['is_correct']; // Pastikan 0 atau 1
+        $is_correct = (int)$option['is_correct'];
         
-        // Binding parameter untuk setiap opsi
-        $stmt->bind_param("isi", $question_id, $option_text, $is_correct); // i = int, s = string, i = int
+        $stmt->bind_param("isi", $question_id, $option_text, $is_correct);
         
-        // Eksekusi
         if (!$stmt->execute()) {
             error_log("Option execute failed: " . $stmt->error);
             $success = false;
-            break; // Hentikan looping jika ada yang gagal
+            break;
         }
     }
 

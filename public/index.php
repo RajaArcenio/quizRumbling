@@ -3,23 +3,61 @@ session_start();
 
 require_once __DIR__ . '/../app/config/database.php'; 
 
-
 require_once __DIR__ . '/../app/functions/helper.php'; 
 require_once __DIR__ . '/../app/functions/auth.php'; 
 require_once __DIR__ . '/../app/functions/dasboard_function.php';
 require_once __DIR__ . '/../app/functions/quiz_function.php';
+require_once __DIR__ . '/../app/functions/admin_function.php';
+require_once __DIR__ . '/../app/functions/leaderboard_function.php';
 
 $page = $_GET['page'] ?? 'dashboard';
-$action = $_POST['action'] ?? null;
+$action = $_POST['action'] ?? $_GET['action'] ?? null;
+
+if ($action === 'logout') {
+    logout_user();
+}
 
 if ($action) {
     switch ($action) {
         case 'login':
-            login($_POST['username'] ?? '', $_POST['password'] ?? '');
-            break;
+            $username = $_POST['username'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            if (login($username, $password)) {
+                if ($_SESSION['isAdmin'] ?? 0 == 1) {
+                    redirect('admin_dashboard'); 
+                } else {
+                    redirect('dashboard');
+                }
+                exit();
+            } else {
+                redirect('login'); 
+                exit();
+            }
         case 'register':
-            register($_POST['username'] ?? '', $_POST['password'] ?? '');
-            break;
+            $email = $_POST['email'] ?? '';
+            $username = $_POST['username'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $confirm_password = $_POST['confirm_password'] ?? '';
+
+            if (empty($email) || empty($username) || empty($password) || empty($confirm_password)) {
+                set_message("Semua field wajib diisi.");
+                redirect('register');
+                exit();
+            }
+            if ($password !== $confirm_password) {
+                set_message("Konfirmasi password tidak cocok.");
+                redirect('register');
+                exit();
+            }
+
+            if (register($email, $username, $password)) {
+                redirect('login');
+                exit();
+            } else {
+                redirect('register');
+                exit();
+            }
         case 'start_quiz':
             $quiz_id = (int)($_POST['quiz_id'] ?? 0);
             if ($quiz_id > 0) {
@@ -29,6 +67,9 @@ if ($action) {
             break;
         case 'submit_quiz':
             submit_quiz(get_current_user_id());
+            break;
+        case 'leaderboard':
+            $view_path = 'leaderboard.php';
             break;
     }
 }

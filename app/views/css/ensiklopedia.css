@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background: url('ensiklopedia_background.jpg') no-repeat center center/cover;
+    background: url('../images/ensiklopedia_background.jpg') no-repeat center center/cover;
     background-color: var(--color-background-dark);
     overflow-x: hidden;
     position: relative;

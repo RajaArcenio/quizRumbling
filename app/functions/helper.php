@@ -1,11 +1,9 @@
 <?php
 
-function redirect(string $page): void  {
-    $url = "/?page=" . urlencode($page);
-    
-    header("Location: " . $url);
-
-    exit; 
+function redirect(string $page) {
+    // Asumsi semua redirect  ke index.php
+    header("Location: index.php?page=" . $page);
+    exit(); 
 }
 
 function set_message(string $message, string $type = 'error'): void {

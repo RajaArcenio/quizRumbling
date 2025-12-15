@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ensiklopedia Human - Attack on Titan</title>
+    <title>Ensiklopedia - Attack on Titan</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/ensiklopedia.css">
+    <link rel="stylesheet" href="../app/views/css/variables.css">
+    <link rel="stylesheet" href="../app/views/css/ensiklopedia.css">
 </head>
 
 <body>
@@ -34,20 +34,13 @@
 
         <!-- Encyclopedia Card -->
         <div class="ensiklopedia-card card-with-overlay">
-            <!-- Content Display Area -->
-            <div class="content-display" id="content-display">
-                <!-- Character cards will be inserted here by JavaScript -->
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="navigation-buttons">
-                <button class="nav-btn previous-btn" id="prev-btn">PREVIOUS</button>
-                <button class="nav-btn next-btn" id="next-btn">NEXT</button>
+            <!-- Category Buttons -->
+            <div class="category-buttons">
+                <button class="category-btn" onclick="location.href='ensiklopedia_human.html'">HUMAN</button>
+                <button class="category-btn" onclick="location.href='ensiklopedia_titan.html'">TITAN</button>
             </div>
         </div>
     </div>
-
-    <script src="js/ensiklopedia_human.js"></script>
 </body>
 
 </html>

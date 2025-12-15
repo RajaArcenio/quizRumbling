@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register AoT</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="../app/views/css/variables.css">
+    <link rel="stylesheet" href="../app/views/css/register.css">
 </head>
 <body>
 
@@ -16,29 +16,29 @@
         <div class="register-box">
             <h2>REGISTER</h2>
 
-            <form>
+            <form method="post">
                 <div class="input-group">
                     <label>EMAIL :</label>
-                    <input type="email" autocomplete="off">
+                    <input type="email" name="email" autocomplete="off">
                 </div>
 
                 <div class="input-group">
                     <label>NEW USERNAME :</label>
-                    <input type="text" autocomplete="off">
+                    <input type="text" name="username" autocomplete="off">
                 </div>
 
                 <div class="input-group">
                     <label>NEW PASSWORD :</label>
-                    <input type="password">
+                    <input type="password" name="password">
                 </div>
 
                 <div class="input-group">
                     <label>KONFIRMASI PASSWORD :</label>
-                    <input type="password">
+                    <input type="password" name="confirm_password">
                 </div>
 
                 <div class="button-container">
-                    <a class="register-button" href="dashboard.html" type="button">DAFTAR</a>
+                    <button name="action" value="register" class="register-button" type="submit">DAFTAR</button>
                 </div>
             </form>
         </div>

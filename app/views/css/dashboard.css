@@ -1,7 +1,7 @@
 body {
     height: 100vh;
     overflow: hidden;
-    background: url('dashboard_background.jpg') no-repeat center center/cover;
+    background: url('../images/dashboard_background.jpg') no-repeat center center/cover;
     background-color: var(--color-background-dark);
     display: flex;
     flex-direction: column;

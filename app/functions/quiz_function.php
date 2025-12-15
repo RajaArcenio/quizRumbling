@@ -16,7 +16,7 @@ function get_available_quiz(): ?array {
     return $quiz;
 }
 
-//fungsi untuk mengecek apakah user sudah mengerjakan quiz, panggil bareng sama quiz_available
+//fungsi untuk mengecek apakah user sudah mengerjakan quiz panggil bareng get_available_quiz di halaman quiz
 function has_user_taken_quiz(int $user_id, int $quiz_id): bool {
     global $conn;
     
@@ -31,20 +31,20 @@ function has_user_taken_quiz(int $user_id, int $quiz_id): bool {
 }
 
 //fungsi untuk load question dan opsi, panggil di halaman quiz sebelum menampilkan soal sebelum memencet kerjakan soal
-//di array index 0 id_soal, 1 teks_soal, 2 opsi (array of array id_opsi, teks_opsi)
+//di array index 0 id_soal, 1 teks_soal, 2 opsi berupa array
 function prepare_quiz_questions(int $quiz_id): ?array {
     global $conn;
-    
+
     $stmt = $conn->prepare("SELECT id_soal, teks_soal FROM soal WHERE id_quiz = ? ORDER BY RAND() LIMIT 5");
     $stmt->bind_param("i", $quiz_id);
     $stmt->execute();
     $questions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
-    
+
     if (empty($questions)) {
         return null;
     }
-    
+
     $quiz_data = [];
     foreach ($questions as $q) {
         $q_id = $q['id_soal'];
@@ -78,7 +78,7 @@ function save_temp_answer(int $question_index, ?int $option_id): void {
 }
 
 //dipanggil di submit quiz, untuk cek jawaban benar atau salah
-//ngga usah dipanggil di halaman quiz
+//ngga usah dipanggil di halaman html
 function check_answer_correctness(int $option_id): bool {
     global $conn;
 
